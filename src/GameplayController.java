@@ -163,8 +163,9 @@ public class GameplayController implements MouseListener {
     //sets the selected square dark gray if there is a playable piece there
     @Override
     public void mousePressed(MouseEvent e) {
-        int row = e.getY()/150;
-        int col = e.getX()/150;
+        int row = e.getY()/(ChessGUI.dimension/16);
+        int col = e.getX()/(ChessGUI.dimension/16);
+        System.out.println(row + ", " + col);
         System.out.println(Board.pieceBoards[11][Conv.to120RC(row, col)]);
         if(Board.isThereAPieceThere(row, col)) {
             setPieceSelectedGUI(row, col);

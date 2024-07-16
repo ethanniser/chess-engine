@@ -8,10 +8,13 @@ public class ChessGUI {
     static String[][] mainBoard = Board.getBoardTemplate();
     public static JLabel[] JLabelCollection = new JLabel[64];
     static int[] pieceSelectedAndCoordinate = new int[2];
+    public static int dimension = (int) Math.min(Toolkit.getDefaultToolkit().getScreenSize().getHeight(),
+            Toolkit.getDefaultToolkit().getScreenSize().getWidth());
 
     //creates chessboard gui
     private static void initializeChessFrame()
     {
+        System.out.println("DIMENSION " + dimension);
         //makes the frame an 8x8 grid layout
         chessFrame.setLayout(new GridLayout(8, 8));
         /*iterates through each cell and sets it to either black or white,
@@ -21,7 +24,7 @@ public class ChessGUI {
         {
             JLabel b = new JLabel();
             b.setOpaque(true);
-            String imgSrc = "src\\Assets\\";
+            String imgSrc = "src/Assets/";
 
             String currentPiece = mainBoard[2+(i/8)][1+(i%8)];
 
@@ -61,10 +64,10 @@ public class ChessGUI {
             //resizes image
             ImageIcon currentPieceImageIcon = new ImageIcon(imgSrc);
             Image currentPieceImage = currentPieceImageIcon.getImage();
-            Image tempImg = currentPieceImage.getScaledInstance(150, 150, Image.SCALE_SMOOTH);
+            Image tempImg = currentPieceImage.getScaledInstance(dimension/16, dimension/16, Image.SCALE_SMOOTH);
             currentPieceImageIcon.setImage(tempImg);
 
-            b.setIcon((Icon) currentPieceImageIcon);
+            b.setIcon(currentPieceImageIcon);
             b.setSize(5, 5);
             JLabelCollection[i] = b;
         }
@@ -72,7 +75,7 @@ public class ChessGUI {
         placeBoardsAgain();
 
         //establishes board
-        chessFrame.setSize(1200, 1200);
+        chessFrame.setSize(dimension/2, dimension/2);
         chessFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         chessFrame.setName("Chess");
         chessFrame.setResizable(false);
