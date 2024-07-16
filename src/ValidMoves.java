@@ -1,8 +1,5 @@
 import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Objects;
+import java.util.*;
 
 public class ValidMoves {
 
@@ -50,6 +47,21 @@ public class ValidMoves {
             case 11 -> possibleWhitePawnMoves(location, bitboards);
             default -> possibleMoves;
         };
+
+        if(!Arrays.deepEquals(bitboards, Board.pieceBoards)) {
+            return possibleMoves;
+        }
+
+        int otherSide = pieceType > 5 ? 0 : 1;
+        System.out.println(possibleMoves);
+        for(int move : possibleMoves) {
+            if(move%100 == Board.kingLocations[otherSide]) {
+                System.out.println(move + "OP");
+                Board.kingsChecked[otherSide] = true;
+                break;
+            }
+
+        }
 
         return possibleMoves;
     }

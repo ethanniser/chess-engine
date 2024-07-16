@@ -167,6 +167,10 @@ public class GameplayController implements MouseListener {
         int col = e.getX()/(ChessGUI.dimension/16);
         System.out.println(row + ", " + col);
         System.out.println(Board.pieceBoards[11][Conv.to120RC(row, col)]);
+        int side = Board.whiteTurn ? 1 : 0;
+        if(row == 4 && col == 4) {
+            System.out.println("King " + side + " is checked? " + Board.kingsChecked[side]);
+        }
         if(Board.isThereAPieceThere(row, col)) {
             setPieceSelectedGUI(row, col);
         }
