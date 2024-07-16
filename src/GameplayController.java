@@ -165,17 +165,25 @@ public class GameplayController implements MouseListener {
     public void mousePressed(MouseEvent e) {
         int row = e.getY()/(ChessGUI.dimension/16);
         int col = e.getX()/(ChessGUI.dimension/16);
-        System.out.println(row + ", " + col);
-        System.out.println(Board.pieceBoards[11][Conv.to120RC(row, col)]);
-        int side = Board.whiteTurn ? 1 : 0;
         if(row == 4 && col == 4) {
-            System.out.println("King " + side + " is checked? " + Board.kingsChecked[side]);
+            //prints if kings checked for testing
+            System.out.println("King 0 is checked? " + Board.kingsChecked[0]);
+            System.out.println("King 1 is checked? " + Board.kingsChecked[1]);
         }
         if(Board.isThereAPieceThere(row, col)) {
             setPieceSelectedGUI(row, col);
         }
         else {
+            //controls checks
             Board.pieceBoards = movePiece(row, col, Board.pieceBoards);
+            int sideToCheck = Board.whiteTurn ? 1 : 0;
+            int otherSide = sideToCheck == 1 ? 0 : 1;
+            if(Board.kingsChecked[otherSide]) {
+                Board.kingsChecked[otherSide] = false;
+            }
+            else if(vm.isKingChecked(Board.pieceBoards, sideToCheck)) {
+                Board.kingsChecked[sideToCheck] = true;
+            }
         }
 
     }

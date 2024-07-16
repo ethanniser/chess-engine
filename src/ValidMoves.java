@@ -52,17 +52,6 @@ public class ValidMoves {
             return possibleMoves;
         }
 
-        int otherSide = pieceType > 5 ? 0 : 1;
-        System.out.println(possibleMoves);
-        for(int move : possibleMoves) {
-            if(move%100 == Board.kingLocations[otherSide]) {
-                System.out.println(move + "OP");
-                Board.kingsChecked[otherSide] = true;
-                break;
-            }
-
-        }
-
         return possibleMoves;
     }
 
@@ -367,7 +356,6 @@ public class ValidMoves {
     }
 
     public boolean isKingChecked(int[][] bitboards, int side) {
-        boolean[] tempKingsChecked = {false, false};
         int otherSide = side == 1 ? 0 : 1;
         HashSet<Integer> totalPossibleMoves = new HashSet<>();
         for (int i = otherSide * 6; i < otherSide*6 + 6; i++) {
