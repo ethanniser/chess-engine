@@ -373,8 +373,8 @@ public class ValidMoves {
         GameplayController tempGC = new GameplayController();
         //creates temporary bitboards to run isKingChecked on;
         int[][] tempBitboards = new int[12][120];
-        int[] tempKingLocations = new int[2];
-        System.arraycopy(Board.kingLocations, 0, tempKingLocations, 0, 2);
+        int[] tempKingLocations = Arrays.copyOf(Board.kingLocations, 2);
+
 
         for(int i = 0; i < 12; i++) {
             System.arraycopy(Board.pieceBoards[i], 0, tempBitboards[i], 0, 120);
@@ -386,7 +386,10 @@ public class ValidMoves {
         tempBitboards[nextBitboard][nextBitboard] = 0;
 
         //simulates king location change
-        tempKingLocations[currentBitboard/6] = nextLocation;
+        if(currentBitboard == 4 || currentBitboard == 10) {
+            tempKingLocations[currentBitboard/6] = nextLocation;
+            System.out.println("The new king location is " + nextLocation);
+        }
 
         return isKingChecked(tempBitboards, currentBitboard/6, tempKingLocations);
     }
