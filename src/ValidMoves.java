@@ -1,4 +1,3 @@
-import java.lang.reflect.Array;
 import java.util.*;
 
 public class ValidMoves {
@@ -230,7 +229,6 @@ public class ValidMoves {
         //adds all not out of bounds moves to possible moves with the rest of the method taking out invalid ones
         for(int op : BLACK_PAWN_OPERATIONS) {
             //sets a variable to -100 if the operation is a capture one
-            //the modifier is only added to the total possible moves but it is not used for checking
             if(!(bitboards[0][location + op] == 2)) {
                 totalPossibleMoves.add(op + location);
             }
@@ -295,7 +293,6 @@ public class ValidMoves {
         //adds all not out of bounds moves to possible moves with the rest of the method taking out invalid ones
         for(int op : WHITE_PAWN_OPERATIONS) {
             //sets a variable to -100 if the operation is a capture one
-            //the modifier is only added to the total possible moves but it is not used for checking
             if(!(bitboards[0][location + op] == 2)) {
                 totalPossibleMoves.add(op + location);
             }
@@ -385,5 +382,17 @@ public class ValidMoves {
 
         return isKingChecked(tempBitboards, currentBitboard/6);
     }
+
+    public boolean isCheckMated(int[][] bitboards, int side) {
+        for(int i = side*6; i < side*6 + 6; i++) {
+            for(int j = 0; j < bitboards[0].length; i++) {
+                if(!possibleMoveFinderAllPieces(j, bitboards).isEmpty()) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
 }
 

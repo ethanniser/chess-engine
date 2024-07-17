@@ -26,8 +26,7 @@ public class GameplayController implements MouseListener {
         //iterates through all possible moves and put moves that check into a hashset to avoid concurrent modification exception
         HashSet<Integer> movesToRemove = new HashSet<>();
         for(int possibleMove : possibleMovesForSelectedPiece) {
-            int modifier = possibleMove > 100 ? -100 : 0;
-            if(vm.willThisMovePutOurKingInCheck(selectedPiece, selectedPieceType, possibleMove + modifier, selectedPiece)) {
+            if(vm.willThisMovePutOurKingInCheck(selectedPiece, selectedPieceType, possibleMove%100, selectedPiece)) {
                 movesToRemove.add(possibleMove);
             }
         }
@@ -165,6 +164,8 @@ public class GameplayController implements MouseListener {
     public void mousePressed(MouseEvent e) {
         int row = e.getY()/(ChessGUI.dimension/16);
         int col = e.getX()/(ChessGUI.dimension/16);
+        System.out.println(e.getY() + ", " + e.getX());
+        System.out.println(col + ", " + row);
         if(row == 4 && col == 4) {
             //prints if kings checked for testing
             System.out.println("King 0 is checked? " + Board.kingsChecked[0]);
