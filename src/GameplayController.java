@@ -25,12 +25,23 @@ public class GameplayController implements MouseListener {
 
         //iterates through all possible moves and put moves that check into a hashset to avoid concurrent modification exception
         HashSet<Integer> movesToRemove = new HashSet<>();
+        int nextBitboard = selectedPieceType;
         for(int possibleMove : possibleMovesForSelectedPiece) {
-            if(vm.willThisMovePutOurKingInCheck(selectedPiece, selectedPieceType, possibleMove%100, selectedPiece)) {
+            //locates the bitboard of the piece being captured if it is a capture
+            if(possibleMove > 100) {
+                for(int i = otherSide*6; i < otherSide*6 + 6; i++) {
+                    System.out.println(i);
+                    if(Board.pieceBoards[i][possibleMove-100] == 1) {
+                        nextBitboard = i;
+                    }
+                }
+            }
+            if(vm.willThisMovePutOurKingInCheck(selectedPiece, selectedPieceType, possibleMove%100, nextBitboard)) {
                 movesToRemove.add(possibleMove);
             }
         }
         possibleMovesForSelectedPiece.removeAll(movesToRemove);
+        System.out.println("Possible moves are: " + possibleMovesForSelectedPiece);
 
         if(possibleMovesForSelectedPiece.contains(Board.kingLocations[otherSide] + 100)) {
             possibleMovesForSelectedPiece.remove(Board.kingLocations[otherSide] + 100);
@@ -182,7 +193,7 @@ public class GameplayController implements MouseListener {
             if(Board.kingsChecked[otherSide]) {
                 Board.kingsChecked[otherSide] = false;
             }
-            else if(vm.isKingChecked(Board.pieceBoards, sideToCheck)) {
+            else if(vm.isKingChecked(Board.pieceBoards, sideToCheck, Board.kingLocations)) {
                 Board.kingsChecked[sideToCheck] = true;
             }
         }
