@@ -394,15 +394,36 @@ public class ValidMoves {
         return isKingChecked(tempBitboards, currentBitboard/6, tempKingLocations);
     }
 
-    public boolean isCheckMated(int[][] bitboards, int side) {
-        for(int i = side*6; i < side*6 + 6; i++) {
-            for(int j = 0; j < bitboards[0].length; i++) {
-                if(!possibleMoveFinderAllPieces(j, bitboards).isEmpty()) {
-                    return true;
+    //finds all possible moves for a side
+    public HashSet<Integer> allAvailableMoves(int[][] bitboards, int side) {
+        HashSet<Integer> possibleMovesForSide = new HashSet<Integer>();
+        for(int i = side * 6; i < (side * 6) + 6; i++) {
+            for(int j = 0; j < bitboards[0].length; j++) {
+                if(bitboards[i][j] != 1) {
+                    continue;
                 }
+                //checks each piece to see if it removes the check
+                HashSet<Integer> possibleMovesForPiece = possibleMoveFinderAllPieces(j, bitboards);
+                possibleMovesForSide.addAll(possibleMovesForPiece);
+                for(int possibleMove : possibleMovesForPiece) {
+                    int nextBitboard = i;
+                    if(possibleMove > 100) {
+                        for(int k = 0; k < 12; k++) {
+                            if(bitboards[k][possibleMove%100] == 1) {
+                                nextBitboard = k;
+                                System.out.println(nextBitboard);
+                            }
+                        }
+                    }
+                    //if check is maintained then remove the move. it is impossible to make
+                    if(willThisMovePutOurKingInCheck(j, i, possibleMove%100, nextBitboard)) {
+                        possibleMovesForSide.remove(possibleMove);
+                    }
+                }
+
             }
         }
-        return false;
+        return possibleMovesForSide;
     }
 
 }

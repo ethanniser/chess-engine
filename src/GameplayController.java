@@ -195,6 +195,11 @@ public class GameplayController implements MouseListener {
             }
             else if(vm.isKingChecked(Board.pieceBoards, sideToCheck, Board.kingLocations)) {
                 Board.kingsChecked[sideToCheck] = true;
+                System.out.println("SIDE TO CHECK " + sideToCheck);
+                //game over is printed outside the method as isCheckMated is used in simulation as well
+                if(vm.allAvailableMoves(Board.pieceBoards, sideToCheck).isEmpty()) {
+                    System.out.println("GAME OVER");
+                }
             }
         }
 
