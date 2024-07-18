@@ -382,8 +382,8 @@ public class ValidMoves {
 
         //simulates move change
         tempBitboards[currentBitboard][currentLocation] = 0;
+        tempBitboards[nextBitboard][nextLocation] = 0;
         tempBitboards[currentBitboard][nextLocation] = 1;
-        tempBitboards[nextBitboard][nextBitboard] = 0;
 
         //simulates king location change
         if(currentBitboard == 4 || currentBitboard == 10) {
