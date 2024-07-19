@@ -24,7 +24,7 @@ public class ChessGUI {
         for (int i = 0; i < 64; i++) {
             JLabel b = new JLabel();
             b.setOpaque(true);
-            String imgSrc = "src/Assets/";
+            String imgSrc = "./Assets/";
 
             String currentPiece = mainBoard[2 + (i / 8)][1 + (i % 8)];
 
