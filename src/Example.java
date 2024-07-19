@@ -28,7 +28,7 @@ public class Example {
     }
 
     final class FooLogic {
-        static int baz(FooData foo) {
+        final static int baz(FooData foo) {
             return foo.bar * 2;
         }
     }
